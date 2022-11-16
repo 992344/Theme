@@ -3,7 +3,7 @@ const appConfig = {
     authenticatedEntryPath: '/app/sales/dashboard',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/app/account/kyc-form',
-    enableMock: true
+    enableMock: true,
 }
 
 export default appConfig

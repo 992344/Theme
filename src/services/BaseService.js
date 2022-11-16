@@ -12,7 +12,7 @@ const BaseService = axios.create({
     timeout: 60000,
     baseURL: appConfig.apiPrefix,
 })
-
+//http://mern-food-delivery-app.herokuapp.com/api
 BaseService.interceptors.request.use(config => {
 
     const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
