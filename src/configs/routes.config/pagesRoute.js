@@ -24,6 +24,18 @@ const pagesRoute = [
             pageContainerType: 'gutter'
         }
     },	
+
+    {
+		key: 'page.new',
+        path: `/ProductManagement/AddNewProduct`,
+        component: React.lazy(() => import('views/pages/ProductManagement/Addnewproduct')),
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'gutter'
+        }
+    },	
+
+
     {
 		key: 'page.SupplierM',
         path: `/Suppliertable`,

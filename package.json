@@ -65,6 +65,7 @@
     "web-vitals": "^2.1.4",
     "yup": "^0.32.10"
   },
+  "proxy": "https://demo7084900.mockable.io",
   "scripts": {
     "start": "run-p watch:css react-scripts:start",
     "build": "run-s build:css react-scripts:build",
