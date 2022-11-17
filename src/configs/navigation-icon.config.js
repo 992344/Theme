@@ -69,7 +69,7 @@ const navigationIcon = {
   Payment: <HiCurrencyRupee />,
   customerOnboarding: <HiUserGroup />,
   salesOrder: <HiClipboardList />,
-  asdfv:<HiIdentification/>,
+  SupplierPO:<HiIdentification/>,
   guide: <HiOutlineBookOpen />,
   documentation: <HiOutlineDocumentText />,
   sharedComponentDoc: <HiOutlineShare />,
