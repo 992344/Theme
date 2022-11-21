@@ -11,7 +11,7 @@ const unauthorizedCode = [401];
 const BaseService = axios.create({
   timeout: 60000,
   // baseURL: "https://e06a51d8-e5e7-4feb-b2dc-b8e3bfaf4968.mock.pstmn.io/api"
-  //  baseURL: appConfig.apiPrefix,
+  //baseURL: appConfig.apiPrefix,
   baseURL: "https://demo7084900.mockable.io",
 });
 BaseService.interceptors.request.use(
@@ -29,8 +29,8 @@ BaseService.interceptors.request.use(
   }
 );
 BaseService.interceptors.response.use(
-  (response) => { 
-    return response
+  (response) => {
+    return response;
   },
   (error) => {
     const { response } = error;

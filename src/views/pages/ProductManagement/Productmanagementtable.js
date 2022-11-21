@@ -7,44 +7,55 @@ import {
   useAsyncDebounce,
   useSortBy,
 } from "react-table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { matchSorter } from "match-sorter";
 import { SupplierManagementData } from "../data";
-import { HiNewspaper, HiOutlinePencil, HiOutlineTrash, HiSearch, HiTruck } from "react-icons/hi";
+import {
+  HiNewspaper,
+  HiOutlinePencil,
+  HiOutlineTrash,
+  HiSearch,
+  HiTruck,
+} from "react-icons/hi";
 import Sorter from "components/ui/Table/Sorter";
-import { apiGetSupplier } from "../../../services/SalesService";
-import axios from "axios";
+import { apiGetPRoduct, apiGetSupplier } from "../../../services/SalesService";
 import BaseService from "services/BaseService";
+import { AdaptableCard } from "components/shared";
+import LoadingSpin from "react-loading-spin";
+import { getProducts, deleteProduct, setTableData } from "../store/dataSlice";
+import { setSortedColumn, setSelectedProduct } from "../store/stateSlice";
+import { useDispatch } from "react-redux";
 
 const { Tr, Th, Td, THead, TBody } = Table;
 
-const ActionColumn = ({row}) => {
-	
-	// const dispatch = useDispatch()
-	// const navigate = useNavigate()
-
-	const onEdit = () => {
-		// navigate(`/app/sales/product-edit/${row.id}`)
-	}
-
-	const onDelete = () => {
-		// dispatch(toggleDeleteConfirmation(true))
-		// dispatch(setSelectedProduct(row.id))
-	}
-	
-	return (
-		<div className="flex justify-end text-lg">
-			<span className="cursor-pointer p-2 hover:text-blue-500" onClick={onEdit}>
-				<HiOutlinePencil />
-			</span>
-			<span className="cursor-pointer p-2 hover:text-red-500" onClick={onDelete}>
-				<HiOutlineTrash />
-			</span>
-		</div>
-	)
-}
-
-
+const ActionColumn = ({ row }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onEdit = () => {
+    navigate(`/ProductManagement/AddNewProduct/${row.id}`);
+  };
+  const onDelete = async () => {
+    console.log("Indelete", row.id);
+    dispatch(setSelectedProduct(row.id));
+    const success = await deleteProduct({ id: row.id });
+    if (success) {
+      console.log("deleted");
+    }
+  };
+  return (
+    <div className="flex justify-end text-lg">
+      <span className="cursor-pointer p-2 hover:text-blue-500" onClick={onEdit}>
+        <HiOutlinePencil />
+      </span>
+      <span
+        className="cursor-pointer p-2 hover:text-red-500"
+        onClick={(e) => onDelete(e)}
+      >
+        <HiOutlineTrash />
+      </span>
+    </div>
+  );
+};
 
 function FilterInput({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
   const count = preGlobalFilteredRows.length;
@@ -183,7 +194,8 @@ const ReactTable = ({ columns, data }) => {
           {firstPageRows.length === 0 && (
             <Tr>
               <Td className="text-center" colspan={allColumns.length}>
-                No data found!
+                {/* No data found! */}
+                <LoadingSpin />
               </Td>
             </Tr>
           )}
@@ -193,58 +205,15 @@ const ReactTable = ({ columns, data }) => {
   );
 };
 function Productmanagementtable() {
-
-    const url = "https://demo7084900.mockable.io/api/supplier/get";
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data.result.data);
-          console.log(data);
-        });
-    }, []);
-
-  //   const [data, setData] = useState([]);
-  //   const getData = useCallback(async () => {
-  //     const resp = await apiGetSupplier();
-  //     if (resp) {
-  //       setData(resp.data);
-  //       console.log(resp.data);
-  //     }
-  //   }, [data]);
-
-  //   useEffect(() => {
-  //     axios
-  //       .get("https://demo7084900.mockable.io/api/supplier/get")
-  //         .then((res) => res.json())
-  //       .then((Data) => {
-  //         console.log("resp json  : ", Data);
-  //          setData(Data.data);
-  //       });
-  //   }, []);
-
-  // const getdata = async () => {
-  //     try {
-  //         const response = await axios.get('https://demo7084900.mockable.io/api/supplier/get');
-  //         if (response) {
-  //             console.log(response);
-  // 			setData(response)
-  //             return true;
-  //         }
-  //         return false;
-  //    } catch (err) {
-  //         console.error(err)
-  //         return false;
-  //    }
-  // }
-
-//   const [data, setData] = useState([]);
-//   useEffect(() => {
-//       const resp =  apiGetSupplier();
-//       console.log("useeffect", resp);
-//   }, []);
+  const [data, setData] = useState([]);
+  const demoFunc = async () => {
+    const resp = await apiGetPRoduct();
+    //console.log(resp.data.result.data);
+    setData(resp.data.result.data);
+  };
+  useEffect(() => {
+    demoFunc();
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -257,43 +226,37 @@ function Productmanagementtable() {
         accessor: "name",
       },
       {
-        Header: "Grade",
-        accessor: "grade",
+        Header: "Product Category",
+        accessor: "category",
       },
       {
-        Header: "Mobile No",
-        accessor: "mobile_no",
+        Header: "HSN Code",
+        accessor: "hsn_code",
       },
       {
-        Header: "Address  ",
-        accessor: "address",
+        Header: "UNIT",
+        accessor: "unit",
       },
-      {
-        Header: "City",
-        accessor: "city",
-      },
-      {
-        Header: "Pin Code",
-        accessor: "pincode",
-      },
+
       {
         Header: "Status",
         accessor: "status",
       },
-	  {
-        Header: '',
-        id: 'action',
+      {
+        Header: "",
+        id: "action",
         accessor: (row) => row,
-        Cell: props => <ActionColumn row={props.row.original} />
+        Cell: (props) => <ActionColumn row={props.row.original} />,
       },
-
     ],
     []
   );
   return (
-    <div>
-      <ReactTable columns={columns} data={data} />
-    </div>
+    <AdaptableCard className="h-full" bodyClass="h-full">
+      <div>
+        <ReactTable columns={columns} data={data} />
+      </div>
+    </AdaptableCard>
   );
 }
 
