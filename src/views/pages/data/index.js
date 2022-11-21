@@ -497,7 +497,7 @@ export const supplierPOData = [
 
     
     {
-      Noti_No: "",
+      Noti_No: "1",
       customer: "HUL",
       Contact: 7770040256,
       supplier:"Ajay Enterprises",

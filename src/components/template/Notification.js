@@ -81,6 +81,7 @@ export const Notification = ({ className })  => {
 
 	const getNotificationCount = useCallback(async () => {
 		const resp = await apiGetNotificationCount()
+		console.log(resp)
 		if(resp.data.count > 0) {
 			setNoResult(false)
 			setUnreadNotification(true)

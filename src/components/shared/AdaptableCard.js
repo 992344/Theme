@@ -35,7 +35,7 @@ const AdaptableCard = props => {
 					'ltr:border-l-0 rtl:border-r-0 ltr:md:border-l rtl:md:border-r md:border-gray-200 md:dark:border-gray-600 rounded-tl-none rounded-bl-none rtl:rounded-tl-none rtl:rounded-bl-none',
 					(type === LAYOUT_TYPE_MODERN && divider) 
 					&& 
-					`${!isLastChild ? 'border-b pb-6' : ''} py-4 md:border-gray-200 md:dark:border-gray-600 rounded-br-none rounded-bl-none`,
+					`${!isLastChild ? 'border-b pb-2' : ''} py-4 md:border-gray-200 md:dark:border-gray-600 rounded-br-none rounded-bl-none`,
 					(type !== LAYOUT_TYPE_MODERN && shadow) && 'rounded-none shadow-none border-0'
 				)
 			}

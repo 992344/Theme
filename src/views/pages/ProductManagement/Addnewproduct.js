@@ -7,19 +7,17 @@ import * as Yup from 'yup'
 import { Select } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
 import Notification from 'components/template/Notification'
-const PamentTermOptions = [
-    { value: 'Next5', label: 'Next5'  },
-    { value: 'Next7', label: 'Next7'},
-    { value: 'Next10', label: 'Next10' },
-    { value: 'Next15', label: 'Next15'},
-    { value: 'Next20', label: 'Next20' },
-    { value: 'Next30', label: 'Next30' },
+const UsageUnite = [
+    { value: 'MTS', label: 'MTS'  },
+    { value: 'Tons', label: 'Tons'},
+    { value: 'Kg', label: 'Number' },
+    { value: 'Number', label: 'Number'},
    
   ]
   const StatusOptions = [
-    { value: 'Approve', label: 'Approve'  },
-    { value: 'Pending', label: 'Pending'},
-    { value: 'Reject', label: 'Reject' },
+    { value: 'Active', label: 'Active'  },
+    { value: 'Inactive', label: 'Inactive'},
+   
   ]
 
 const validationSchema = Yup.object().shape({
@@ -28,8 +26,7 @@ const validationSchema = Yup.object().shape({
 	password: Yup.string().required('Password Required').min(8, 'Too Short!').matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed'),
 	rememberMe: Yup.bool()
 })
-
-const Basic = () => {
+const Addnewproduct = () => {
 
     const navigate = useNavigate()
 
@@ -50,14 +47,14 @@ const Basic = () => {
 	
 
 	const handleDiscard = () => {
-		navigate('/Suppliertable')
+		navigate('/ProductManagement')
 	}
 	
 	
 
     return (
         <div >
-            <div className='bg-gray-200 rounded-md pt-3 pb-3 mb-4' ><h5 className='ml-5 '> Supplier Management</h5></div>
+            <div className='bg-gray-200 rounded-md pt-3 pb-3 mb-4' ><h5 className='ml-5 '>Add New Product</h5></div>
 			<Formik
 				initialValues={{ email: '', userName: '', password: '', rememberMe: false }}
 				validationSchema={validationSchema}
@@ -70,97 +67,68 @@ const Basic = () => {
                             <div className='gap-10 columns-2'>
                           <div>
                             <FormItem
-								label="User Name"
+								label="Product Category"
 								// invalid={errors.userName && touched.userName}
 								// errorMessage={errors.userName}
 							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="User Name" component={Input} />
+								<Field type="text" autoComplete="off" name="Product Category" placeholder="Enter Product Category" component={Input} />
 							</FormItem>
                           <FormItem
-								label="Email ID"
+								label="HSN Code"
 								
 							>
-								<Field type="email" autoComplete="off" name="email" placeholder="Email Id" component={Input} />
+								<Field type="number" autoComplete="off" name="HSN Code" placeholder="Enter HSN Code"  component={Input}/>
 							</FormItem>
                             <FormItem
-								label="Mobile No"
-								invalid=''
+								label="Discription"
+								//invalid=''
 								// errorMessage={errors.email}
 							>
-								<Field type="number" autoComplete="off" name="Mobile No" placeholder="Mobile No" component={Input} />
+							<Field type="text" autoComplete="off" name="Discription" placeholder="Enter  Discription" component={Input} />
 							</FormItem>
-                            <FormItem
-								label="Billing Address"
-								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
+
+	
+                           
+							<FormItem
+								label="Location"
+								invalid={errors.email && touched.email}
+								//errorMessage={errors.email}
 							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="Billing Address" component={Input} />
+								<Field type="email" autoComplete="off" name="Location" placeholder="location" component={Input} />
 							</FormItem>
-                            <FormItem
-								label="City"
-								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
-							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="City Name" component={Input} />
-							</FormItem>
-                            <FormItem
-								label="Pin Code"
-								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
-							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="Enter Pin" component={Input} />
-							</FormItem>
-<span><label htmlFor="">Comment</label></span>
-							<div>	<Input placeholder="Text area example" textArea /></div>
-							
+                           
 							
                           </div>
                             
                             <div>
-							<FormItem
-								label="Location"
-								invalid={errors.email && touched.email}
-								errorMessage={errors.email}
-							>
-								<Field type="email" autoComplete="off" name="email" placeholder="location" component={Input} />
+							<FormItem 
+							label="Usage Unit"
+							       >
+							<Select placeholder="Please Select" options={UsageUnite}></Select>
 							</FormItem>
 							<FormItem
+							
+							
 								label="Aadhar No"
 								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
+								//errorMessage={errors.userName}
 							>
 								<Field type="text" autoComplete="off" name="userName" placeholder="Aadhar No" component={Input} />
 							</FormItem>
-                            <FormItem
-								label="Pan No"
-								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
-							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="Pan No" component={Input} />
-							</FormItem>
+    
                             <FormItem
 								label="GSTIN No"
 								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
+								//errorMessage={errors.userName}
 							>
 								<Field type="text" autoComplete="off" name="userName" placeholder="Pan No" component={Input} />
 							</FormItem>
-                            <FormItem
-								label="Grade"
-								invalid={errors.userName && touched.userName}
-								errorMessage={errors.userName}
-							>
-								<Field type="text" autoComplete="off" name="userName" placeholder="Grade" component={Input} />
-							</FormItem>
-                            <div  className='gap-4 mb-4'>
-                                <span><label htmlFor="">Payments Terms</label></span>
-			<Select placeholder="Please Select" options={PamentTermOptions}></Select>
-		</div>
+                            
 
-        <div className='gap-4 mb-4'>
+                             <div className='gap-4 mb-4'>
                                 <span><label htmlFor="">Satus</label></span>
 			<Select placeholder="Please Select" options={StatusOptions}></Select>
-		</div>
+		                     </div>
 							<div className='inline-flex flex-wrap xl:flex gap-rend justify-between mt-4 '>
 							
 							<FormItem >
@@ -180,4 +148,4 @@ const Basic = () => {
 	)
 }
 
-export default Basic
+export default Addnewproduct
