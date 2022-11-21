@@ -1,4 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
+import axios from "axios";
+import { apiGetSupplier } from "services/SalesService";
 import { Table, Input, Button } from "components/ui";
 import { useDispatch } from "react-redux";
  import { getOrders } from "views/sales/OrderList/store/dataSlice";
@@ -22,38 +24,35 @@ import { useEffect } from "react";
 import { AdaptableCard } from "components/shared";
 
 
-
-
 const { Tr, Th, Td, THead, TBody } = Table;
 
-const ActionColumn = ({row}) => {
-	
-	// const dispatch = useDispatch()
-	// const navigate = useNavigate()
+const ActionColumn = ({ row }) => {
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
 
-	const onEdit = () => {
-		// navigate(`/app/sales/product-edit/${row.id}`)
-	}
+  const onEdit = () => {
+    // navigate(`/app/sales/product-edit/${row.id}`)
+  };
 
-	const onDelete = () => {
-		// dispatch(toggleDeleteConfirmation(true))
-		// dispatch(setSelectedProduct(row.id))
-	}
-	
-	return (
-		<div className="flex justify-end text-lg">
-			<span className="cursor-pointer p-2 hover:text-blue-500" onClick={onEdit}>
-				<HiOutlinePencil />
-			</span>
-			<span className="cursor-pointer p-2 hover:text-red-500" onClick={onDelete}>
-				<HiOutlineTrash />
-			</span>
-		</div>
-	)
-}
+  const onDelete = () => {
+    // dispatch(toggleDeleteConfirmation(true))
+    // dispatch(setSelectedProduct(row.id))
+  };
 
-
-
+  return (
+    <div className="flex justify-end text-lg">
+      <span className="cursor-pointer p-2 hover:text-blue-500" onClick={onEdit}>
+        <HiOutlinePencil />
+      </span>
+      <span
+        className="cursor-pointer p-2 hover:text-red-500"
+        onClick={onDelete}
+      >
+        <HiOutlineTrash />
+      </span>
+    </div>
+  );
+};
 
 function FilterInput({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
   const count = preGlobalFilteredRows.length;
@@ -201,7 +200,7 @@ const ReactTable = ({ columns, data }) => {
 };
 
 function SupplierPO() {
-  // const url ="https://demo7084900.mockable.io/api/supplier/get"
+  // const url = "https://demo7084900.mockable.io/api/supplier/get";
   // const [data, setData] = useState([]);
 
   // useEffect(() => {
@@ -211,37 +210,39 @@ function SupplierPO() {
   //       setData(data);
   //       console.log(data.result.data);
   //     });
-  //     console.log(data)
+  //   console.log(data);
   // }, []);
-
-
 
   // const [data, setData] = useState([]);
   // const getData = useCallback(async () => {
-	// 	const resp = await apiGetSupplier()
-	// 	if(resp) {
-	// 		setData(resp.data)
+  // 	const resp = await apiGetSupplier()
+  // 	if(resp) {
+  // 		setData(resp.data)
   //     console.log(resp.data)
-	// 	}
-	// }, [data])
+  // 	}
+  // }, [data])
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const demoFunc = async () => {
+      const resp = await apiGetSupplier();
+      console.log(resp.data.result.data);
+      // apiGetSupplier().then((res) => {
+      //   return console.log(res, "resp");
+      setData(resp.data.result.data);
+    };
+    demoFunc();
+  }, []);
 
-  const dispatch = useDispatch()
-
-  const getDataSP=()=>{
-  dispatch(getOrders())
-  }
-	useEffect(() => {
-    const resp= getDataSP()
-   console.log(resp)
-	}, [])
-  
-
-
-
-
-
-
-
+  // const fetchData = async () => {
+  //   const abc = await axios.get(
+  //     "https://demo7084900.mockable.io/api/supplier/get"
+  //   );
+  //   console.log(abc, "abc");
+  //   const response = apiGetSupplier();
+  //   if (response) {
+  //     console.log(response, "suplierdata");
+  //   }
+  // };
 
   const columns = useMemo(
     () => [
@@ -279,25 +280,22 @@ function SupplierPO() {
         accessor: "status",
       },
       {
-        Header: '',
-        id: 'action',
+        Header: "",
+        id: "action",
         accessor: (row) => row,
-        Cell: props => <ActionColumn row={props.row.original} />
+        Cell: (props) => <ActionColumn row={props.row.original} />,
       },
-
-     
-
     ],
     []
   );
 
   return (
     <>
-    <AdaptableCard className="h-full" bodyClass="h-full">
-      <div>
-        <ReactTable columns={columns} data={supplierPOData} />
-      </div>
-    </AdaptableCard>
+      <AdaptableCard className="h-full" bodyClass="h-full">
+        <div>
+          <ReactTable columns={columns} data={data} />
+        </div>
+      </AdaptableCard>
     </>
   );
 }

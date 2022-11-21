@@ -1,6 +1,6 @@
 import BaseService from "./BaseService";
 const ApiService = {
-  fetchData(param) {
+  async fetchData(param) {
     return new Promise(async (resolve, reject) => {
       BaseService(param)
         .then((response) => {

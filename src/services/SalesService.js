@@ -71,7 +71,7 @@ export async function apiGetSalesOrderDetails(params) {
     params,
   });
 }
-
+// ----------------------BioFuel CRUDE-------------------
 export async function apiGetSupplier() {
 
 const data= ApiService.fetchData({
@@ -80,4 +80,27 @@ const data= ApiService.fetchData({
   });
   console.log(data)
   return data
+}
+
+export async function apiGetPRoduct() {
+  return ApiService.fetchData({
+    url: "/api/product/get",
+    method: "get",
+  });
+}
+
+export async function apiPostProduct(data) {
+  return ApiService.fetchData({
+    url: "/api/product/create",
+    method: "post",
+    data,
+  });
+}
+
+export async function apiDeleteProduct(data) {
+  return ApiService.fetchData({
+    url: "/api/product/update",
+    method: "put",
+    data,
+  });
 }
