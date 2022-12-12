@@ -285,6 +285,7 @@ const Addnewproduct = () => {
                           type="number"
                           autoComplete="off"
                           name="GSTINNo"
+                          v
                           placeholder="Enter GSTIN No"
                           component={Input}
                         />

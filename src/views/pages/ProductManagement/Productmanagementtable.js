@@ -21,7 +21,7 @@ import Sorter from "components/ui/Table/Sorter";
 import { apiGetPRoduct, apiGetSupplier } from "../../../services/SalesService";
 import BaseService from "services/BaseService";
 import { AdaptableCard } from "components/shared";
-import LoadingSpin from "react-loading-spin";
+// import LoadingSpin from "react-loading-spin";
 import { getProducts, deleteProduct, setTableData } from "../store/dataSlice";
 import { setSortedColumn, setSelectedProduct } from "../store/stateSlice";
 import { useDispatch } from "react-redux";
@@ -37,10 +37,10 @@ const ActionColumn = ({ row }) => {
   const onDelete = async () => {
     console.log("Indelete", row.id);
     dispatch(setSelectedProduct(row.id));
-    const success = await deleteProduct({ id: row.id });
-    if (success) {
-      console.log("deleted");
-    }
+    dispatch(deleteProduct({ id: row.id }));
+    // if (success) {
+    //   console.log("deleted");
+    // }
   };
   return (
     <div className="flex justify-end text-lg">
@@ -195,7 +195,7 @@ const ReactTable = ({ columns, data }) => {
             <Tr>
               <Td className="text-center" colspan={allColumns.length}>
                 {/* No data found! */}
-                <LoadingSpin />
+                {/* <LoadingSpin /> */}
               </Td>
             </Tr>
           )}
@@ -206,13 +206,14 @@ const ReactTable = ({ columns, data }) => {
 };
 function Productmanagementtable() {
   const [data, setData] = useState([]);
+  const dispatch = useDispatch()
   const demoFunc = async () => {
     const resp = await apiGetPRoduct();
     //console.log(resp.data.result.data);
     setData(resp.data.result.data);
   };
   useEffect(() => {
-    demoFunc();
+  dispatch(getProducts())
   }, []);
 
   const columns = useMemo(

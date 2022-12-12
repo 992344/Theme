@@ -99,8 +99,8 @@ export async function apiPostProduct(data) {
 
 export async function apiDeleteProduct(data) {
   return ApiService.fetchData({
-    url: "/api/product/update",
-    method: "put",
+    url: `/api/product/${data.id}`,
+    method: "delete",
     data,
   });
 }

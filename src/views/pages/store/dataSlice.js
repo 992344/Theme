@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiGetPRoduct, apiDeleteProduct } from "services/SalesService";
 
 export const getProducts = createAsyncThunk(
-  "salesProductList/data/getProducts",
-  async (data) => {
-    const response = await apiGetPRoduct(data);
+  "salesProductManagement/data/getProducts",
+  async () => {
+    const response = await apiGetPRoduct();
     return response.data;
   }
 );
@@ -15,7 +15,7 @@ export const deleteProduct = async (data) => {
 };
 
 const dataSlice = createSlice({
-  name: "salesProductList/data",
+  name: "salesProductManagement/data",
   initialState: {
     loading: false,
     productList: [],

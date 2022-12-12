@@ -9,19 +9,6 @@ import { onSignOutSuccess } from "../store/auth/sessionSlice";
 const unauthorizedCode = [401];
 
 const BaseService = axios.create({
-<<<<<<< HEAD
-    timeout: 60000,
-    baseURL: appConfig.apiPrefix,
-})
-//http://mern-food-delivery-app.herokuapp.com/api
-BaseService.interceptors.request.use(config => {
-
-    const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
-    const persistData = deepParseJson(rawPersistData)
-    
-    const accessToken = persistData.auth.session.token
-
-=======
   timeout: 60000,
   // baseURL: "https://e06a51d8-e5e7-4feb-b2dc-b8e3bfaf4968.mock.pstmn.io/api"
   //baseURL: appConfig.apiPrefix,
@@ -32,7 +19,6 @@ BaseService.interceptors.request.use(
     const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME);
     const persistData = deepParseJson(rawPersistData);
     const accessToken = persistData.auth.session.token;
->>>>>>> f69624ecad7200487726ad4ea0c518ac94f1d584
     if (accessToken) {
       config.headers[REQUEST_HEADER_AUTH_KEY] = `${TOKEN_TYPE}${accessToken}`;
     }
